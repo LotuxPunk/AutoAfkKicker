@@ -17,13 +17,13 @@ public class Session {
     }
 
     public void increaseTimer(){
-        setTickAFK(getTickAFK()+1);
+        tickAFK++;
     }
 
-    public void update(){
-        this.setAfk(false);
-        this.setTickAFK(0);
-        this.setPos(this.getPlayer().getPosition());
+    public void reset(){
+        this.isAfk = false;
+        this.tickAFK=0;
+        this.pos = this.getPlayer().getPosition();
     }
 
     public EntityPlayerMP getPlayer() {
