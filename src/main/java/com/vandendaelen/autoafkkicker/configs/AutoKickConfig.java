@@ -16,9 +16,11 @@ public class AutoKickConfig {
 
     public static class Timer{
         @Config.LangKey("config.timer.warn")
+        @Config.Comment("In minute")
         public int warnTimer= 5;
 
-        @Config.LangKey("config.timer.warn")
+        @Config.LangKey("config.timer.kick")
+        @Config.Comment("In minute")
         public int kickTimer= 10;
     }
 
