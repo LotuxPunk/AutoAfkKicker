@@ -5,33 +5,42 @@ import com.vandendaelen.autoafkkicker.configs.AutoKickConfig;
 import com.vandendaelen.autoafkkicker.objects.Session;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = AutoAfkKicker.MOD_ID)
+@SideOnly(Side.SERVER)
 public class AutoKickerServerEventHandler {
 
-    public static List<Session> sessions = new ArrayList<>();
+    public static HashMap<UUID, Session> sessions = new HashMap<UUID, Session>();
     public static List<EntityPlayerMP> playersToKick = new ArrayList<>();
     public static long warnTimerTick = 0;
     public static long kickTimerTick = 0;
 
     @SubscribeEvent
+    public static  void onPlayerInteract(PlayerInteractEvent event) {
+        Session s_player = sessions.get(event.getEntityPlayer().getGameProfile().getId());
+        if (s_player != null) {
+            s_player.reset();
+        }
+    }
+
+    @SubscribeEvent
     public static void onServerTickEvent(TickEvent.ServerTickEvent event) {
-
-
-
         if (event.phase == TickEvent.Phase.START){
-
             if (!sessions.isEmpty()){
-                for (Session session : sessions){
-                    session.getPlayer().sendMessage(new TextComponentString(session.getTickAFK()+" "+warnTimerTick));
+                for (Session session : sessions.values()){
                     if (session.getPlayer().getPosition().equals(session.getPos())){
                         session.increaseTimer();
                         if (session.getTickAFK() == warnTimerTick){
@@ -46,7 +55,7 @@ public class AutoKickerServerEventHandler {
                         if (session.isAfk()){
                             FMLCommonHandler.instance().getMinecraftServerInstance().sendMessage(new TextComponentString(session.getPlayer().getName()+" isn't longer AFK"));
                         }
-                        session.update();
+                        session.reset();
                     }
                 }
             }
@@ -55,16 +64,17 @@ public class AutoKickerServerEventHandler {
             for (EntityPlayerMP player : playersToKick){
                 player.connection.disconnect(new TextComponentString(AutoKickConfig.AfkTimer.discMsg));
             }
+            playersToKick.clear();
         }
     }
 
     @SubscribeEvent
     public static void onPlayerConnectionEvent(PlayerEvent.PlayerLoggedInEvent event){
-        sessions.add(new Session((EntityPlayerMP)event.player,event.player.getPosition()));
+        sessions.put(event.player.getGameProfile().getId(),new Session((EntityPlayerMP)event.player,event.player.getPosition()));
     }
 
     @SubscribeEvent
     public static void onPlayerDisconnectionEvent(PlayerEvent.PlayerLoggedOutEvent event){
-        sessions.removeIf(session -> session.getPlayer().getName().equals(event.player.getName()));
+        sessions.remove(event.player.getGameProfile().getId());
     }
 }

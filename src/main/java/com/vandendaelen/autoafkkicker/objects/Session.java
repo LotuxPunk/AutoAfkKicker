@@ -20,7 +20,7 @@ public class Session {
         tickAFK++;
     }
 
-    public void update(){
+    public void reset(){
         this.isAfk = false;
         this.tickAFK=0;
         this.pos = this.getPlayer().getPosition();
