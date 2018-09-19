@@ -44,6 +44,7 @@ public class AutoKickerServerEventHandler {
                         }
                         session.setAfk(false);
                         session.setTickAFK(0);
+                        session.setPos(session.getPlayer().getPosition());
                     }
                 }
             }
