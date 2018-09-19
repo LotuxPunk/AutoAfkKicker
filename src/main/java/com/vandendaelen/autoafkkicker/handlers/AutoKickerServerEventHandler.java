@@ -19,16 +19,19 @@ public class AutoKickerServerEventHandler {
 
     public static List<Session> sessions = new ArrayList<>();
     public static List<EntityPlayerMP> playersToKick = new ArrayList<>();
+    public static long warnTimerTick = 0;
+    public static long kickTimerTick = 0;
 
     @SubscribeEvent
     public static void onServerTickEvent(TickEvent.ServerTickEvent event) {
-        long warnTimerTick = AutoKickConfig.AfkTimer.warnTimer*60*20;
-        long kickTimerTick = AutoKickConfig.AfkTimer.kickTimer*60*20;
+
+
 
         if (event.phase == TickEvent.Phase.START){
 
             if (!sessions.isEmpty()){
                 for (Session session : sessions){
+                    session.getPlayer().sendMessage(new TextComponentString(session.getTickAFK()+" "+warnTimerTick));
                     if (session.getPlayer().getPosition().equals(session.getPos())){
                         session.increaseTimer();
                         if (session.getTickAFK() == warnTimerTick){

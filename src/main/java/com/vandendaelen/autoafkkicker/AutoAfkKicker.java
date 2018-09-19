@@ -1,5 +1,7 @@
 package com.vandendaelen.autoafkkicker;
 
+import com.vandendaelen.autoafkkicker.configs.AutoKickConfig;
+import com.vandendaelen.autoafkkicker.handlers.AutoKickerServerEventHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
 import org.apache.logging.log4j.LogManager;
@@ -25,6 +27,8 @@ public class AutoAfkKicker {
 
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event){
+        AutoKickerServerEventHandler.warnTimerTick = AutoKickConfig.AfkTimer.warnTimer*60*20;
+        AutoKickerServerEventHandler.kickTimerTick = AutoKickConfig.AfkTimer.kickTimer*60*20;
     }
 
     @Mod.EventHandler
