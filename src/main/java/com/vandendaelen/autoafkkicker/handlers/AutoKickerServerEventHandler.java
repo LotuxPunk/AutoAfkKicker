@@ -43,9 +43,7 @@ public class AutoKickerServerEventHandler {
                         if (session.isAfk()){
                             FMLCommonHandler.instance().getMinecraftServerInstance().sendMessage(new TextComponentString(session.getPlayer().getName()+" isn't longer AFK"));
                         }
-                        session.setAfk(false);
-                        session.setTickAFK(0);
-                        session.setPos(session.getPlayer().getPosition());
+                        session.update();
                     }
                 }
             }

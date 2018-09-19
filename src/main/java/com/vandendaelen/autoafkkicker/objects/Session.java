@@ -20,6 +20,12 @@ public class Session {
         setTickAFK(getTickAFK()+1);
     }
 
+    public void update(){
+        this.setAfk(false);
+        this.setTickAFK(0);
+        this.setPos(this.getPlayer().getPosition());
+    }
+
     public EntityPlayerMP getPlayer() {
         return player;
     }
