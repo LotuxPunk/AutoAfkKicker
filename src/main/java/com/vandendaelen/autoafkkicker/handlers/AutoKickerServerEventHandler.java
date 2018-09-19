@@ -22,9 +22,10 @@ public class AutoKickerServerEventHandler {
 
     @SubscribeEvent
     public static void onServerTickEvent(TickEvent.ServerTickEvent event) {
+        long warnTimerTick = AutoKickConfig.AfkTimer.warnTimer*60*20;
+        long kickTimerTick = AutoKickConfig.AfkTimer.kickTimer*60*20;
+
         if (event.phase == TickEvent.Phase.START){
-            long warnTimerTick = AutoKickConfig.AfkTimer.warnTimer*60*20;
-            long kickTimerTick = AutoKickConfig.AfkTimer.kickTimer*60*20;
 
             if (!sessions.isEmpty()){
                 for (Session session : sessions){
@@ -51,7 +52,7 @@ public class AutoKickerServerEventHandler {
         }
         else if (event.phase == TickEvent.Phase.END && !playersToKick.isEmpty()){
             for (EntityPlayerMP player : playersToKick){
-                player.connection.disconnect(new TextComponentString("You were ejected for inactivity"));
+                player.connection.disconnect(new TextComponentString(AutoKickConfig.AfkTimer.discMsg));
             }
         }
     }

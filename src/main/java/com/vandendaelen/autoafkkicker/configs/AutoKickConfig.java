@@ -22,6 +22,9 @@ public class AutoKickConfig {
         @Config.LangKey("config.timer.kick")
         @Config.Comment("In minute")
         public int kickTimer= 10;
+
+        @Config.LangKey("config.disconnect.msg")
+        public String discMsg = "You were ejected for inactivity";
     }
 
     @Mod.EventBusSubscriber(modid = AutoAfkKicker.MOD_ID)
