@@ -1,0 +1,16 @@
+[
+{
+  "modid": "autoafkkicker",
+  "name": "AutoAfkKicker Mod",
+  "description": "Kick the player who stays on your server by doing nothing.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["LotuxPunk"],
+  "credits": ",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
