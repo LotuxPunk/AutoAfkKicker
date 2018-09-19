@@ -2,6 +2,7 @@ package com.vandendaelen.autoafkkicker;
 
 import com.vandendaelen.autoafkkicker.configs.AutoKickConfig;
 import com.vandendaelen.autoafkkicker.handlers.AutoKickerServerEventHandler;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
 import org.apache.logging.log4j.LogManager;

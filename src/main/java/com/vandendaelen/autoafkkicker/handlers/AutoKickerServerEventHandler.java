@@ -3,8 +3,12 @@ package com.vandendaelen.autoafkkicker.handlers;
 import com.vandendaelen.autoafkkicker.AutoAfkKicker;
 import com.vandendaelen.autoafkkicker.configs.AutoKickConfig;
 import com.vandendaelen.autoafkkicker.objects.Session;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.event.CommandEvent;
+import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -20,7 +24,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = AutoAfkKicker.MOD_ID)
-@SideOnly(Side.SERVER)
 public class AutoKickerServerEventHandler {
 
     public static HashMap<UUID, Session> sessions = new HashMap<UUID, Session>();
@@ -29,9 +32,38 @@ public class AutoKickerServerEventHandler {
     public static long kickTimerTick = 0;
 
     @SubscribeEvent
-    public static  void onPlayerInteract(PlayerInteractEvent event) {
+    public static void onPlayerInteract(PlayerInteractEvent event) {
         Session s_player = sessions.get(event.getEntityPlayer().getGameProfile().getId());
         if (s_player != null) {
+            if  (s_player.isAfk()) {
+                FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(s_player.getPlayer().getName() + " isn't longer AFK"));
+            }
+            s_player.reset();
+        }
+    }
+
+    @SubscribeEvent
+    public static void onCommand(CommandEvent event) {
+        Entity ent = event.getSender().getCommandSenderEntity();
+        if (ent instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer)ent;
+            Session s_player = sessions.get(player.getGameProfile().getId());
+            if (s_player != null) {
+                if (s_player.isAfk()) {
+                    FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(s_player.getPlayer().getName() + " isn't longer AFK"));
+                }
+                s_player.reset();
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onChat(ServerChatEvent event) {
+        Session s_player = sessions.get(event.getPlayer().getGameProfile().getId());
+        if (s_player != null) {
+            if  (s_player.isAfk()) {
+                FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(s_player.getPlayer().getName() + " isn't longer AFK"));
+            }
             s_player.reset();
         }
     }
@@ -44,7 +76,7 @@ public class AutoKickerServerEventHandler {
                     if (session.getPlayer().getPosition().equals(session.getPos())){
                         session.increaseTimer();
                         if (session.getTickAFK() == warnTimerTick){
-                            FMLCommonHandler.instance().getMinecraftServerInstance().sendMessage(new TextComponentString(session.getPlayer().getName()+" is now AFK"));
+                            FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(session.getPlayer().getName()+" is now AFK"));
                             session.setAfk(true);
                         }
                         else if (session.getTickAFK() == kickTimerTick){
@@ -53,7 +85,7 @@ public class AutoKickerServerEventHandler {
                     }
                     else {
                         if (session.isAfk()){
-                            FMLCommonHandler.instance().getMinecraftServerInstance().sendMessage(new TextComponentString(session.getPlayer().getName()+" isn't longer AFK"));
+                            FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(session.getPlayer().getName()+" isn't longer AFK"));
                         }
                         session.reset();
                     }
