@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
  * @author LotuxPunk
  */
 
-@Mod(modid = AutoAfkKicker.MOD_ID,name = AutoAfkKicker.MOD_NAME, version = AutoAfkKicker.VERSION)
+@Mod(modid = AutoAfkKicker.MOD_ID,name = AutoAfkKicker.MOD_NAME, version = AutoAfkKicker.VERSION, acceptableRemoteVersions = "*")
 public class AutoAfkKicker {
     public static final String MOD_ID = "autoafkkicker";
     public static final String MOD_NAME = "AutoAfkKicker";
