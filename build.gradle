@@ -10,6 +10,15 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
+jar {
+    manifest {
+        attributes([
+                'Maven-Artifact': "${project.group}:${archivesBaseName}:${project.version}",
+                'Timestamp'     : System.currentTimeMillis()
+        ])
+    }
+}
+
 
 version = "0.0.3"
 group = "com.vandendaelen.autoafkkicker" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -33,7 +42,15 @@ minecraft {
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
+repositories {
+    maven{
+        name "computerCraft"
+        url 'http://cc.crzd.me/maven/'
+    }
+}
+
 dependencies {
+    compile "dan200.computercraft:ComputerCraft:1.80pr1-build1"
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
