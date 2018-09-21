@@ -2,8 +2,13 @@ package com.vandendaelen.autoafkkicker.objects;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 
 public class Session {
+    public static String AFKMessage = "%s is now AFK";
+    public static String noLongerAFKMessage = "%s is no longer AFK";
     private EntityPlayerMP player;
     private BlockPos pos;
     private long tickAFK;
@@ -20,8 +25,8 @@ public class Session {
         tickAFK++;
     }
 
-    public void reset(){
-        this.isAfk = false;
+    public void reset(boolean sendMessage){
+        this.setAfk(false, sendMessage);
         this.tickAFK=0;
         this.pos = this.getPlayer().getPosition();
     }
@@ -50,7 +55,13 @@ public class Session {
         return isAfk;
     }
 
-    public void setAfk(boolean afk) {
+    public void setAfk(boolean afk, boolean sendMessage) {
         isAfk = afk;
+        if (sendMessage) {
+            if (afk)
+                FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(String.format(AFKMessage,this.player.getName())));
+            else
+                FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(String.format(noLongerAFKMessage,this.player.getName())));
+        }
     }
 }
