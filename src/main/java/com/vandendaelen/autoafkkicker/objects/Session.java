@@ -3,6 +3,8 @@ package com.vandendaelen.autoafkkicker.objects;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 
 public class Session {
     public static String AFKMessage = "%s is now AFK";
@@ -57,9 +59,9 @@ public class Session {
         isAfk = afk;
         if (sendMessage) {
             if (afk)
-                this.player.sendMessage(new TextComponentString(String.format(AFKMessage,this.player.getName())));
+                FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(String.format(AFKMessage,this.player.getName())));
             else
-                this.player.sendMessage(new TextComponentString(String.format(noLongerAFKMessage,this.player.getName())));
+                FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(String.format(noLongerAFKMessage,this.player.getName())));
         }
     }
 }
