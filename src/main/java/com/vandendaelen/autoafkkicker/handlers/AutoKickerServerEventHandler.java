@@ -32,7 +32,7 @@ public class AutoKickerServerEventHandler {
     public static long kickTimerTick = 0;
 
     @SubscribeEvent
-    public static void onPlayerInteract(PlayerInteractEvent event) {
+    public static void onPlayerInteractEvent(PlayerInteractEvent event) {
         Session s_player = sessions.get(event.getEntityPlayer().getGameProfile().getId());
         if (s_player != null) {
             if  (s_player.isAfk()) {
@@ -43,7 +43,7 @@ public class AutoKickerServerEventHandler {
     }
 
     @SubscribeEvent
-    public static void onCommand(CommandEvent event) {
+    public static void onCommandEvent(CommandEvent event) {
         Entity ent = event.getSender().getCommandSenderEntity();
         if (ent instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer)ent;
@@ -58,7 +58,7 @@ public class AutoKickerServerEventHandler {
     }
 
     @SubscribeEvent
-    public static void onChat(ServerChatEvent event) {
+    public static void onChatEvent(ServerChatEvent event) {
         Session s_player = sessions.get(event.getPlayer().getGameProfile().getId());
         if (s_player != null) {
             if  (s_player.isAfk()) {
