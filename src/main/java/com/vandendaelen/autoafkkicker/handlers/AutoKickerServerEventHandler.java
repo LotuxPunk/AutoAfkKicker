@@ -3,6 +3,7 @@ package com.vandendaelen.autoafkkicker.handlers;
 import com.vandendaelen.autoafkkicker.AutoAfkKicker;
 import com.vandendaelen.autoafkkicker.configs.AutoKickConfig;
 import com.vandendaelen.autoafkkicker.objects.Session;
+import com.vandendaelen.autoafkkicker.utils.AAKString;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -17,6 +18,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.server.permission.PermissionAPI;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,7 +96,8 @@ public class AutoKickerServerEventHandler {
         }
         else if (event.phase == TickEvent.Phase.END && !playersToKick.isEmpty()){
             for (EntityPlayerMP player : playersToKick){
-                player.connection.disconnect(new TextComponentString(AutoKickConfig.AfkTimer.discMsg));
+                if(!PermissionAPI.hasPermission(player, AAKString.Permissions.AFK_BYPASS))
+                    player.connection.disconnect(new TextComponentString(AutoKickConfig.AfkTimer.discMsg));
             }
             playersToKick.clear();
         }

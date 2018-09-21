@@ -2,8 +2,11 @@ package com.vandendaelen.autoafkkicker;
 
 import com.vandendaelen.autoafkkicker.configs.AutoKickConfig;
 import com.vandendaelen.autoafkkicker.handlers.AutoKickerServerEventHandler;
+import com.vandendaelen.autoafkkicker.utils.AAKString;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.server.permission.DefaultPermissionLevel;
+import net.minecraftforge.server.permission.PermissionAPI;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,8 +30,12 @@ public class AutoAfkKicker {
 
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event){
+        //Timers
         AutoKickerServerEventHandler.warnTimerTick = AutoKickConfig.AfkTimer.warnTimer*60*20;
         AutoKickerServerEventHandler.kickTimerTick = AutoKickConfig.AfkTimer.kickTimer*60*20;
+
+        //Permissions
+        PermissionAPI.registerNode(AAKString.Permissions.AFK_BYPASS, DefaultPermissionLevel.OP, "Allow player to bypass AFK kick");
     }
 
     @Mod.EventHandler
