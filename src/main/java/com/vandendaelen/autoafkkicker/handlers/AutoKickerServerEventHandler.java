@@ -35,10 +35,7 @@ public class AutoKickerServerEventHandler {
     public static void onPlayerInteractEvent(PlayerInteractEvent event) {
         Session s_player = sessions.get(event.getEntityPlayer().getGameProfile().getId());
         if (s_player != null) {
-            if  (s_player.isAfk()) {
-                FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(s_player.getPlayer().getName() + " isn't longer AFK"));
-            }
-            s_player.reset();
+            s_player.reset(s_player.isAfk());
         }
     }
 
@@ -49,10 +46,7 @@ public class AutoKickerServerEventHandler {
             EntityPlayer player = (EntityPlayer)ent;
             Session s_player = sessions.get(player.getGameProfile().getId());
             if (s_player != null) {
-                if (s_player.isAfk()) {
-                    FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(s_player.getPlayer().getName() + " isn't longer AFK"));
-                }
-                s_player.reset();
+                s_player.reset(s_player.isAfk());
             }
         }
     }
@@ -61,10 +55,7 @@ public class AutoKickerServerEventHandler {
     public static void onChatEvent(ServerChatEvent event) {
         Session s_player = sessions.get(event.getPlayer().getGameProfile().getId());
         if (s_player != null) {
-            if  (s_player.isAfk()) {
-                FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(s_player.getPlayer().getName() + " isn't longer AFK"));
-            }
-            s_player.reset();
+            s_player.reset(s_player.isAfk());
         }
     }
 
@@ -76,18 +67,14 @@ public class AutoKickerServerEventHandler {
                     if (session.getPlayer().getPosition().equals(session.getPos())){
                         session.increaseTimer();
                         if (session.getTickAFK() == warnTimerTick){
-                            FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(session.getPlayer().getName()+" is now AFK"));
-                            session.setAfk(true);
+                            session.setAfk(true,true);
                         }
                         else if (session.getTickAFK() == kickTimerTick){
                             playersToKick.add(session.getPlayer());
                         }
                     }
                     else {
-                        if (session.isAfk()){
-                            FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(session.getPlayer().getName()+" isn't longer AFK"));
-                        }
-                        session.reset();
+                        session.reset(session.isAfk());
                     }
                 }
             }
