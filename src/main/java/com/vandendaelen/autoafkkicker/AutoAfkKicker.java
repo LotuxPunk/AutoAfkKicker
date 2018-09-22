@@ -2,9 +2,11 @@ package com.vandendaelen.autoafkkicker;
 
 import com.vandendaelen.autoafkkicker.configs.AutoKickConfig;
 import com.vandendaelen.autoafkkicker.handlers.AutoKickerServerEventHandler;
+import com.vandendaelen.autoafkkicker.integrations.opencomputer.OC;
 import com.vandendaelen.autoafkkicker.utils.AAKString;
 import com.vandendaelen.autoafkkicker.integrations.computercraft.CC;
 import dan200.computercraft.ComputerCraft;
+import li.cil.oc.OpenComputers;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
@@ -52,8 +54,13 @@ public class AutoAfkKicker {
     @Mod.EventHandler
     public void onServerStarted(FMLServerStartedEvent event) {
         LOGGER.info("AutoAfkKicker started");
+
         if (Loader.isModLoaded(ComputerCraft.LOWER_ID)) {
             CC computercraft = new CC();
+        }
+
+        if (Loader.isModLoaded(OpenComputers.ID().toLowerCase())) {
+            OC computercraft = new OC();
         }
     }
 }
