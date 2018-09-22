@@ -71,7 +71,7 @@ public class AutoKickerServerEventHandler {
                         if (session.getTickAFK() == warnTimerTick){
                             session.setAfk(true,true);
                         }
-                        else if (session.getTickAFK() == kickTimerTick){
+                        else if (session.getTickAFK() >= kickTimerTick && session.isKickable()){
                             playersToKick.add(session.getPlayer());
                         }
                     }
@@ -83,8 +83,7 @@ public class AutoKickerServerEventHandler {
         }
         else if (event.phase == TickEvent.Phase.END && !playersToKick.isEmpty()){
             for (EntityPlayerMP player : playersToKick){
-                if(!PermissionAPI.hasPermission(player, AAKString.Permissions.AFK_BYPASS))
-                    player.connection.disconnect(new TextComponentString(AutoKickConfig.AfkTimer.discMsg));
+                player.connection.disconnect(new TextComponentString(AutoKickConfig.TIMER.discMsg));
             }
             playersToKick.clear();
         }

@@ -1,10 +1,12 @@
 package com.vandendaelen.autoafkkicker.objects;
 
+import com.vandendaelen.autoafkkicker.utils.AAKString;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
+import net.minecraftforge.server.permission.PermissionAPI;
 
 public class Session {
     public static String AFKMessage = "%s is now AFK";
@@ -63,5 +65,9 @@ public class Session {
             else
                 FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(String.format(noLongerAFKMessage,this.player.getName())));
         }
+    }
+
+    public boolean isKickable(){
+        return !PermissionAPI.hasPermission(player, AAKString.Permissions.AFK_BYPASS);
     }
 }

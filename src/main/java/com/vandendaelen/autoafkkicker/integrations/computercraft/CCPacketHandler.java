@@ -1,12 +1,11 @@
 package com.vandendaelen.autoafkkicker.integrations.computercraft;
 
+import com.vandendaelen.autoafkkicker.AutoAfkKicker;
+import com.vandendaelen.autoafkkicker.configs.AutoKickConfig;
 import com.vandendaelen.autoafkkicker.handlers.AutoKickerServerEventHandler;
 import com.vandendaelen.autoafkkicker.objects.Session;
-import dan200.computercraft.shared.network.ComputerCraftPacket;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.NetHandlerPlayServer;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 
@@ -19,9 +18,14 @@ public class CCPacketHandler {
                 NetHandlerPlayServer handlerPS = (NetHandlerPlayServer) handler;
                 Session s_player = AutoKickerServerEventHandler.sessions.get(handlerPS.player.getGameProfile().getId());
                 s_player.reset(s_player.isAfk());
+                if (AutoKickConfig.DEBUGGING.debug){
+                    AutoAfkKicker.LOGGER.info(handlerPS.player.getName()+" CC packet");
+                }
             }
         } catch (Exception e) {
-
+            if (AutoKickConfig.DEBUGGING.debug){
+                AutoAfkKicker.LOGGER.info(e.getMessage());
+            }
         }
     }
 }
