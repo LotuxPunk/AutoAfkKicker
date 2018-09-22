@@ -23,7 +23,7 @@ import org.apache.logging.log4j.Logger;
 public class AutoAfkKicker {
     public static final String MOD_ID = "autoafkkicker";
     public static final String MOD_NAME = "AutoAfkKicker";
-    public static final String VERSION = "0.0.4";
+    public static final String VERSION = "0.0.5";
     public static final Logger LOGGER = LogManager.getLogger(MOD_NAME);
 
     @Mod.Instance(MOD_ID)
@@ -55,11 +55,11 @@ public class AutoAfkKicker {
     public void onServerStarted(FMLServerStartedEvent event) {
         LOGGER.info("AutoAfkKicker started");
 
-        if (Loader.isModLoaded(ComputerCraft.LOWER_ID)) {
+        if (Loader.isModLoaded(AAKString.Integration.COMPUTER_CRAFT)) {
             CC computercraft = new CC();
         }
 
-        if (Loader.isModLoaded(OpenComputers.ID().toLowerCase())) {
+        if (Loader.isModLoaded(AAKString.Integration.OPEN_COMPUTER)) {
             OC computercraft = new OC();
         }
     }
