@@ -1,5 +1,7 @@
 package com.vandendaelen.autoafkkicker.integrations.opencomputer;
 
+import com.vandendaelen.autoafkkicker.AutoAfkKicker;
+import com.vandendaelen.autoafkkicker.configs.AutoKickConfig;
 import com.vandendaelen.autoafkkicker.handlers.AutoKickerServerEventHandler;
 import com.vandendaelen.autoafkkicker.objects.Session;
 import net.minecraft.network.INetHandler;
@@ -16,9 +18,15 @@ public class OCPacketHandler {
                 NetHandlerPlayServer handlerPS = (NetHandlerPlayServer) handler;
                 Session s_player = AutoKickerServerEventHandler.sessions.get(handlerPS.player.getGameProfile().getId());
                 s_player.reset(s_player.isAfk());
+                if (AutoKickConfig.DEBUGGING.debug){
+                    AutoAfkKicker.LOGGER.info(handlerPS.player.getName()+" OC packet");
+                }
             }
         } catch (Exception e) {
-
+            if (AutoKickConfig.DEBUGGING.debug){
+                AutoAfkKicker.LOGGER.info(e.getMessage());
+            }
         }
+
     }
 }

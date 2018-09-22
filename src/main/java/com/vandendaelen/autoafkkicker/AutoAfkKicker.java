@@ -36,8 +36,8 @@ public class AutoAfkKicker {
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event){
         //Timers
-        AutoKickerServerEventHandler.warnTimerTick = AutoKickConfig.AfkTimer.warnTimer*60*20;
-        AutoKickerServerEventHandler.kickTimerTick = AutoKickConfig.AfkTimer.kickTimer*60*20;
+        AutoKickerServerEventHandler.warnTimerTick = AutoKickConfig.TIMER.warnTimer*60*20;
+        AutoKickerServerEventHandler.kickTimerTick = AutoKickConfig.TIMER.kickTimer*60*20;
 
         //Permissions
         PermissionAPI.registerNode(AAKString.Permissions.AFK_BYPASS, DefaultPermissionLevel.OP, "Allow player to bypass AFK kick");
@@ -55,12 +55,21 @@ public class AutoAfkKicker {
     public void onServerStarted(FMLServerStartedEvent event) {
         LOGGER.info("AutoAfkKicker started");
 
+        if (AutoKickConfig.DEBUGGING.debug)
+            LOGGER.info("Debug ON");
+
         if (Loader.isModLoaded(AAKString.Integration.COMPUTER_CRAFT)) {
             CC computercraft = new CC();
+            if (AutoKickConfig.DEBUGGING.debug){
+                LOGGER.info("CC is loaded");
+            }
         }
 
         if (Loader.isModLoaded(AAKString.Integration.OPEN_COMPUTER)) {
-            OC computercraft = new OC();
+            OC opencomputer = new OC();
+            if (AutoKickConfig.DEBUGGING.debug){
+                LOGGER.info("OC is loaded");
+            }
         }
     }
 }

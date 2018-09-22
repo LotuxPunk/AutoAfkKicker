@@ -6,8 +6,9 @@ import net.minecraftforge.common.config.Config;
 @Config(modid = AutoAfkKicker.MOD_ID,name = "AutoAfkKicker")
 public class AutoKickConfig {
 
-    @Config.LangKey("config.entity")
-    public static final Timer AfkTimer = new Timer();
+    public static final Timer TIMER = new Timer();
+    public static final Debugging DEBUGGING = new Debugging();
+
 
     public static class Timer{
         @Config.LangKey("config.timer.warn")
@@ -20,6 +21,12 @@ public class AutoKickConfig {
 
         @Config.LangKey("config.disconnect.msg")
         public String discMsg = "You were ejected for inactivity";
+    }
+
+    public static class Debugging {
+        @Config.LangKey("config.debug")
+        @Config.Comment("Only to debug the mod, may spam the console a lot")
+        public boolean debug = false;
     }
 
 }
