@@ -23,7 +23,7 @@ import org.apache.logging.log4j.Logger;
 public class AutoAfkKicker {
     public static final String MOD_ID = "autoafkkicker";
     public static final String MOD_NAME = "AutoAfkKicker";
-    public static final String VERSION = "0.0.5";
+    public static final String VERSION = "0.0.6";
     public static final Logger LOGGER = LogManager.getLogger(MOD_NAME);
 
     @Mod.Instance(MOD_ID)
