@@ -20,7 +20,7 @@ jar {
 }
 
 
-version = "0.0.7"
+version = "0.1"
 group = "com.vandendaelen.autoafkkicker" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "autoafkkicker"
 
