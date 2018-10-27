@@ -8,9 +8,9 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 import net.minecraftforge.server.permission.PermissionAPI;
 
+import static com.vandendaelen.autoafkkicker.configs.AutoKickConfig.TEXT;
+
 public class Session {
-    public static String AFKMessage = "%s is now AFK";
-    public static String noLongerAFKMessage = "%s is no longer AFK";
     private EntityPlayerMP player;
     private BlockPos pos;
     private long tickAFK;
@@ -61,9 +61,9 @@ public class Session {
         isAfk = afk;
         if (sendMessage) {
             if (afk)
-                FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(String.format(AFKMessage,this.player.getName())));
+                FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(String.format(TEXT.AFKMessage,this.player.getName())));
             else
-                FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(String.format(noLongerAFKMessage,this.player.getName())));
+                FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(String.format(TEXT.noLongerAFKMessage,this.player.getName())));
         }
     }
 
