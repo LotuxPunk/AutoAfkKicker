@@ -20,7 +20,7 @@ jar {
 }
 
 
-version = "0.1"
+version = "0.2"
 group = "com.vandendaelen.autoafkkicker" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "autoafkkicker"
 
@@ -30,7 +30,7 @@ compileJava {
 }
 
 minecraft {
-    version = "1.12.2-14.23.5.2768"
+    version = "1.12.2-14.23.5.2807"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
@@ -53,11 +53,21 @@ repositories {
         name = "OC repo"
         url = "http://maven.cil.li/"
     }
+
+    maven {
+        name = "JitPack"
+        url = "https://jitpack.io"
+    }
+
+    maven {
+        name = "JEI"
+        url  = "http://dvs1.progwml6.com/files/maven"
+    }
 }
 
 dependencies {
     //CC
-    compile "dan200.computercraft:ComputerCraft:1.80pr1-build1"
+    compile "com.github.SquidDev-CC:CC-Tweaked:1.80pr1.14"
     //OC
     compile "li.cil.oc:OpenComputers:MC1.12.2-1.7.+"
 }

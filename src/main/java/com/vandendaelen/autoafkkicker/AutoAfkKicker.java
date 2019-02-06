@@ -2,11 +2,9 @@ package com.vandendaelen.autoafkkicker;
 
 import com.vandendaelen.autoafkkicker.configs.AutoKickConfig;
 import com.vandendaelen.autoafkkicker.handlers.AutoKickerServerEventHandler;
+import com.vandendaelen.autoafkkicker.integrations.computercraft.CC;
 import com.vandendaelen.autoafkkicker.integrations.opencomputer.OC;
 import com.vandendaelen.autoafkkicker.utils.AAKString;
-import com.vandendaelen.autoafkkicker.integrations.computercraft.CC;
-import dan200.computercraft.ComputerCraft;
-import li.cil.oc.OpenComputers;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
@@ -23,7 +21,7 @@ import org.apache.logging.log4j.Logger;
 public class AutoAfkKicker {
     public static final String MOD_ID = "autoafkkicker";
     public static final String MOD_NAME = "AutoAfkKicker";
-    public static final String VERSION = "0.1";
+    public static final String VERSION = "0.2";
     public static final Logger LOGGER = LogManager.getLogger(MOD_NAME);
 
     @Mod.Instance(MOD_ID)

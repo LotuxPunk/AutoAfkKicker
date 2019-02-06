@@ -1,37 +1,25 @@
 package com.vandendaelen.autoafkkicker.integrations.computercraft;
 
-import com.vandendaelen.autoafkkicker.AutoAfkKicker;
-import com.vandendaelen.autoafkkicker.configs.AutoKickConfig;
-import com.vandendaelen.autoafkkicker.handlers.AutoKickerServerEventHandler;
-import com.vandendaelen.autoafkkicker.objects.Session;
-import dan200.computercraft.shared.network.ComputerCraftPacket;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.INetHandler;
-import net.minecraft.network.NetHandlerPlayServer;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.network.FMLNetworkEvent;
-
 public class CCPacketHandler {
-    @SubscribeEvent(priority = EventPriority.HIGHEST) // Because we need to copy the ByteBuf before ComputerCraft read it, otherwise the buffer will be empty
-    public void onPacketEvent(FMLNetworkEvent.ServerCustomPacketEvent packet) {
-        try {
-            ByteBuf buf = packet.getPacket().payload().copy(); //Copy the ByteBuf
-            if (buf.readByte() == ComputerCraftPacket.QueueEvent) { //Check if the packet is a QueueEvent packet
-                INetHandler handler = packet.getPacket().getOrigin().getNetHandler();
-                if (handler instanceof NetHandlerPlayServer) {
-                    NetHandlerPlayServer handlerPS = (NetHandlerPlayServer) handler;
-                    Session s_player = AutoKickerServerEventHandler.sessions.get(handlerPS.player.getGameProfile().getId());
-                    s_player.reset(s_player.isAfk());
-                    if (AutoKickConfig.DEBUGGING.debug) {
-                        AutoAfkKicker.LOGGER.info(handlerPS.player.getName() + " CC packet");
-                    }
-                }
-            }
-        } catch (Exception e) {
-            if (AutoKickConfig.DEBUGGING.debug){
-                AutoAfkKicker.LOGGER.info(e.getMessage());
-            }
-        }
-    }
+//    @SubscribeEvent(priority = EventPriority.HIGHEST) // Because we need to copy the ByteBuf before ComputerCraft read it, otherwise the buffer will be empty
+//    public void onPacketEvent(FMLNetworkEvent.ServerCustomPacketEvent packet) {
+//        try {
+//            ByteBuf buf = packet.getPacket().payload().copy(); //Copy the ByteBuf
+//            if (buf.readByte() == ComputerCraftPacket.QueueEvent) { //Check if the packet is a QueueEvent packet
+//                INetHandler handler = packet.getPacket().getOrigin().getNetHandler();
+//                if (handler instanceof NetHandlerPlayServer) {
+//                    NetHandlerPlayServer handlerPS = (NetHandlerPlayServer) handler;
+//                    Session s_player = AutoKickerServerEventHandler.sessions.get(handlerPS.player.getGameProfile().getId());
+//                    s_player.reset(s_player.isAfk());
+//                    if (AutoKickConfig.DEBUGGING.debug) {
+//                        AutoAfkKicker.LOGGER.info(handlerPS.player.getName() + " CC packet");
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            if (AutoKickConfig.DEBUGGING.debug){
+//                AutoAfkKicker.LOGGER.info(e.getMessage());
+//            }
+//        }
+//    }
 }
