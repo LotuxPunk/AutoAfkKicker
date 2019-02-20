@@ -1,0 +1,25 @@
+modLoader="javafml" #mandatory
+loaderVersion="[25,)" #mandatory
+issueTrackerURL="https://github.com/LotuxPunk/AutoAfkKicker/issues"
+displayURL="https://github.com/LotuxPunk/AutoAfkKicker"
+authors="LotuxPunk"
+
+[[mods]] #mandatory
+modId="autoafkkicker" #mandatory
+version="1.13.2-0.0.0.1" #mandatory
+displayName="AutoAfkKicker" #mandatory
+description='''Finally a mod that just allows you to avoid inactivity on your Forge server''' #mandatory
+
+[[dependencies.autoafkkicker]]
+    modId="forge"
+    mandatory=true
+    versionRange="[25,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.autoafkkicker]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.13.2]"
+    ordering="NONE"
+side="BOTH"
