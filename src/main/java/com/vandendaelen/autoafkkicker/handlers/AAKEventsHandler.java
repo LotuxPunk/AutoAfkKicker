@@ -2,6 +2,7 @@ package com.vandendaelen.autoafkkicker.handlers;
 
 import com.vandendaelen.autoafkkicker.configs.ConfigAAK;
 import com.vandendaelen.autoafkkicker.objects.Session;
+import com.vandendaelen.autoafkkicker.utils.Reference;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -10,6 +11,7 @@ import net.minecraftforge.event.CommandEvent;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -18,19 +20,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+@Mod.EventBusSubscriber(modid = Reference.MODID)
 public class AAKEventsHandler {
-    private HashMap<UUID, Session> sessions = new HashMap<UUID, Session>();
-    private List<EntityPlayerMP> playersToKick = new ArrayList<>();
-    private long warnTimerTick = 0;
-    private long kickTimerTick = 0;
-
-    public AAKEventsHandler() {
-        this.warnTimerTick = ConfigAAK.getWarnTimer()*60*20;
-        this.kickTimerTick = ConfigAAK.getKickTimer()*60*20;
-    }
+    private static HashMap<UUID, Session> sessions = new HashMap<UUID, Session>();
+    private static List<EntityPlayerMP> playersToKick = new ArrayList<>();
+    public static long warnTimerTick = 0;
+    public static long kickTimerTick = 0;
 
     @SubscribeEvent
-    public void onPlayerInteractEvent(PlayerInteractEvent event) {
+    public static void onPlayerInteractEvent(PlayerInteractEvent event) {
         Session s_player = sessions.get(event.getEntityPlayer().getGameProfile().getId());
         if (s_player != null) {
             s_player.reset(s_player.isAfk());
@@ -38,7 +36,7 @@ public class AAKEventsHandler {
     }
 
     @SubscribeEvent
-    public void onCommandEvent(CommandEvent event) {
+    public static void onCommandEvent(CommandEvent event) {
         Entity ent = event.getParseResults().getContext().getSource().getEntity();
         if (ent instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer)ent;
@@ -50,7 +48,7 @@ public class AAKEventsHandler {
     }
 
     @SubscribeEvent
-    public void onChatEvent(ServerChatEvent event) {
+    public static void onChatEvent(ServerChatEvent event) {
         Session s_player = sessions.get(event.getPlayer().getGameProfile().getId());
         if (s_player != null) {
             s_player.reset(s_player.isAfk());
@@ -58,7 +56,7 @@ public class AAKEventsHandler {
     }
 
     @SubscribeEvent
-    public void onServerTickEvent(TickEvent.ServerTickEvent event) {
+    public static void  onServerTickEvent(TickEvent.ServerTickEvent event) {
         if (event.phase == TickEvent.Phase.START){
             if (!sessions.isEmpty()){
                 for (Session session : sessions.values()){
@@ -86,12 +84,12 @@ public class AAKEventsHandler {
     }
 
     @SubscribeEvent
-    public void onPlayerConnectionEvent(PlayerEvent.PlayerLoggedInEvent event){
+    public static void onPlayerConnectionEvent(PlayerEvent.PlayerLoggedInEvent event){
         sessions.put(event.getPlayer().getGameProfile().getId(),new Session((EntityPlayerMP)event.getPlayer(),event.getPlayer().getPosition()));
     }
 
     @SubscribeEvent
-    public void onPlayerDisconnectionEvent(PlayerEvent.PlayerLoggedOutEvent event){
+    public static void onPlayerDisconnectionEvent(PlayerEvent.PlayerLoggedOutEvent event){
         sessions.remove(event.getPlayer().getGameProfile().getId());
     }
 }
