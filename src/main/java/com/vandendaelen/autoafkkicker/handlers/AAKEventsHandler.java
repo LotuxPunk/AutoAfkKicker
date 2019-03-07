@@ -14,6 +14,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -89,5 +90,11 @@ public class AAKEventsHandler {
     @SubscribeEvent
     public static void onPlayerDisconnectionEvent(PlayerEvent.PlayerLoggedOutEvent event){
         sessions.remove(event.getPlayer().getGameProfile().getId());
+    }
+
+    @SubscribeEvent
+    public static void onServerStarting(FMLServerAboutToStartEvent event){
+        AAKEventsHandler.warnTimerTick = ConfigAAK.getWarnTimer()*60*20;
+        AAKEventsHandler.kickTimerTick = ConfigAAK.getKickTimer()*60*20;
     }
 }

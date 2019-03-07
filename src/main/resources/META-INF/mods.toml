@@ -6,7 +6,7 @@ authors="LotuxPunk"
 
 [[mods]] #mandatory
 modId="autoafkkicker" #mandatory
-version="1.13.2-0.0.0.1" #mandatory
+version="1.13.2-0.0.0.2" #mandatory
 displayName="AutoAfkKicker" #mandatory
 description='''Finally a mod that just allows you to avoid inactivity on your Forge server''' #mandatory
 
