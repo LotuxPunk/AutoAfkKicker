@@ -57,21 +57,19 @@ public class AAKEventsHandler {
 
     @SubscribeEvent
     public static void  onServerTickEvent(TickEvent.ServerTickEvent event) {
-        if (event.phase == TickEvent.Phase.START){
-            if (!sessions.isEmpty()){
-                for (Session session : sessions.values()){
-                    if (session.getPlayer().getPosition().equals(session.getPos())){
-                        session.increaseTimer();
-                        if (session.getTickAFK() == warnTimerTick){
-                            session.setAfk(true,true);
-                        }
-                        else if (session.getTickAFK() >= kickTimerTick && session.isKickable()){
-                            playersToKick.add(session.getPlayer());
-                        }
+        if (event.phase == TickEvent.Phase.START && !sessions.isEmpty()){
+            for (Session session : sessions.values()){
+                if (session.getPlayer().getPosition().equals(session.getPos())){
+                    session.increaseTimer();
+                    if (session.getTickAFK() == warnTimerTick){
+                        session.setAfk(true,true);
                     }
-                    else {
-                        session.reset(session.isAfk());
+                    else if (session.getTickAFK() >= kickTimerTick && session.isKickable()){
+                        playersToKick.add(session.getPlayer());
                     }
+                }
+                else {
+                    session.reset(session.isAfk());
                 }
             }
         }

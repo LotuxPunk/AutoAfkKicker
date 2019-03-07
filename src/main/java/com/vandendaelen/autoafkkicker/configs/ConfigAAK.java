@@ -28,7 +28,7 @@ public class ConfigAAK {
                 .defineInRange("warnTimer", 5, 1, Integer.MAX_VALUE);
         kickTimer = builder
                 .comment("In minute")
-                .defineInRange("kickTimer", 5, 1, Integer.MAX_VALUE);
+                .defineInRange("kickTimer", 10, 1, Integer.MAX_VALUE);
         builder.pop();
         builder.push("dev");
         debug = builder
