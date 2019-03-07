@@ -22,7 +22,6 @@ public class ConfigAAK {
     }
 
     public ConfigAAK(ForgeConfigSpec.Builder builder) {
-        builder.push("general");
         builder.push("timers");
         warnTimer = builder
                 .comment("In minute")
@@ -31,9 +30,11 @@ public class ConfigAAK {
                 .comment("In minute")
                 .defineInRange("kickTimer", 5, 1, Integer.MAX_VALUE);
         builder.pop();
+        builder.push("dev");
         debug = builder
                 .comment("Only to debug the mod, may spam the console a lot")
                 .define("debug", false);
+        builder.pop();
         builder.push("messages");
         discMsg = builder
                 .comment("Disconnect message")
@@ -44,7 +45,6 @@ public class ConfigAAK {
         noLongerAFKMessage = builder
                 .comment("Message to show when a player is not longer AFK (%s is the username)")
                 .define("noafkmessage","%s is no longer AFK");
-        builder.pop();
         builder.pop();
     }
 
